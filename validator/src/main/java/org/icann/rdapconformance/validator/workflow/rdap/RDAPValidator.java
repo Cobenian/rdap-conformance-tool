@@ -71,6 +71,8 @@ public abstract class RDAPValidator implements ValidatorWorkflow {
   private final RDAPValidatorResults results;
   private final RDAPDatasetService datasetService;
 
+  private String resultsPath;
+
   public RDAPValidator(RDAPValidatorConfiguration config,
       FileSystem fileSystem,
       RDAPQueryTypeProcessor queryTypeProcessor,
@@ -263,6 +265,14 @@ public abstract class RDAPValidator implements ValidatorWorkflow {
 
     query.getStatusCode().ifPresent(rdapValidationResultFile::build);
 
+    // XXX: This is a temporary solution to print the result path
+    // System.out.println("Result path is: " + rdapValidationResultFile.resultPath);
+    this.resultsPath = rdapValidationResultFile.resultPath;
     return RDAPValidationStatus.SUCCESS.getValue();
+  }
+
+  @Override
+  public String getResultsPath() {
+      return this.resultsPath;
   }
 }
