@@ -42,17 +42,12 @@ public class RdapConformanceTool implements RDAPValidatorConfiguration, Callable
   private RDAPQueryType queryType;
   @Option(names = {"-v", "--verbose"}, description = "display all logs")
   private boolean isVerbose = false;
-  @Option(names = {"--print-results-path"}, description = "Print the path where the results are saved")
-  private boolean printResultsPath = false;
 
   @Override
   public Integer call() throws Exception {
     if (!isVerbose) {
       Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
       root.setLevel(Level.OFF);
-    }  else {
-      // Logger rootLogger = (Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-      // rootLogger.setLevel(Level.DEBUG);
     }
 
     ValidatorWorkflow validator;
@@ -61,17 +56,7 @@ public class RdapConformanceTool implements RDAPValidatorConfiguration, Callable
     } else {
       validator = new RDAPFileValidator(this, fileSystem);
     }
-    Logger rootLogger = (Logger)LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-    rootLogger.setLevel(Level.DEBUG);
-    Integer ret = validator.validate();
-    rootLogger.setLevel(Level.OFF);
-
-    if (printResultsPath) {
-      System.out.println("[RdapConformaceTool] ==> Results path is: " + validator.getResultsPath());
-      System.out.println("[RdapConformaceTool] ==> Return value is: " + Integer.toString(ret));
-    }
-    
-    return ret;
+    return validator.validate();
   }
 
   @Override

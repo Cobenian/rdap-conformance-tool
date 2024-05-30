@@ -266,8 +266,6 @@ public class RDAPValidator implements ValidatorWorkflow {
 
     query.getStatusCode().ifPresent(rdapValidationResultFile::build);
 
-    // XXX: This is a temporary solution to print the result path
-    // System.out.println("Result path is: " + rdapValidationResultFile.resultPath);
     this.resultsPath = rdapValidationResultFile.resultPath;
     return RDAPValidationStatus.SUCCESS.getValue();
   }
